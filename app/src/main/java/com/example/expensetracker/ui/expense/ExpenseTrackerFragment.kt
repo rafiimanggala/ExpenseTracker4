@@ -25,6 +25,7 @@ import com.example.expensetracker4.data.repository.BudgetRepository
 import com.example.expensetracker4.data.repository.ExpenseRepository
 import com.example.expensetracker4.data.viewmodel.ExpenseViewModel
 import com.example.expensetracker4.data.viewmodel.ExpenseViewModelFactory
+import com.example.expensetracker4.databinding.DialogExpenseDetailBinding
 import com.example.expensetracker4.databinding.FragmentExpenseTrackerBinding
 import com.example.expensetracker4.ui.budget.BudgetViewModel
 import com.example.expensetracker4.ui.budget.BudgetViewModelFactory
@@ -121,30 +122,25 @@ class ExpenseTrackerFragment : Fragment() {
 
     private fun showExpenseDetailDialog(expense: Expense) {
         val budget = budgets.find { it.id == expense.budgetId }
-        val dialogView = layoutInflater.inflate(R.layout.dialog_expense_detail, null)
+        val dialogBinding = DialogExpenseDetailBinding.inflate(layoutInflater)
         val formatter = SimpleDateFormat("dd MMM yyyy", Locale("id", "ID"))
 
-        val tvDate = dialogView.findViewById<TextView>(R.id.tvDate)
-        val tvNote = dialogView.findViewById<TextView>(R.id.tvNote)
-        val tvNominal = dialogView.findViewById<TextView>(R.id.tvNominal)
-        val tvBudget = dialogView.findViewById<TextView>(R.id.tvBudget)
-        val btnClose = dialogView.findViewById<Button>(R.id.btnClose)
-
-        tvDate.text = formatter.format(Date(expense.date))
-        tvNote.text = expense.note
-        tvNominal.text = "Rp ${expense.amount.toInt()}"
-        tvBudget.text = budget?.name ?: "Unknown"
+        dialogBinding.tvDate.text = formatter.format(Date(expense.date))
+        dialogBinding.tvNote.text = expense.note
+        dialogBinding.tvNominal.text = "Rp ${expense.amount.toInt()}"
+        dialogBinding.tvBudget.text = budget?.name ?: "Unknown"
 
         val dialog = AlertDialog.Builder(requireContext())
-            .setView(dialogView)
+            .setView(dialogBinding.root)
             .create()
 
-        btnClose.setOnClickListener {
+        dialogBinding.btnClose.setOnClickListener {
             dialog.dismiss()
         }
 
         dialog.show()
     }
+
 
 
 

@@ -1,13 +1,10 @@
 package com.example.expensetracker4.ui.report
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.expensetracker4.R
 import com.example.expensetracker4.data.BudgetWithUsage
+import com.example.expensetracker4.databinding.ItemReportBinding
 
 class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ReportViewHolder>() {
 
@@ -19,27 +16,27 @@ class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ReportViewHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class ReportViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ReportViewHolder(private val binding: ItemReportBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: BudgetWithUsage) {
             val total = item.budget.total
             val used = item.used
             val remaining = total - used
 
-            view.findViewById<TextView>(R.id.textBudgetName).text = item.budget.name
-            view.findViewById<TextView>(R.id.textUsed).text = "IDR $used"
-            view.findViewById<TextView>(R.id.textMax).text = "IDR $total"
-            view.findViewById<TextView>(R.id.textRemaining).text = "Budget left: IDR $remaining"
-
             val percent = if (total == 0.0) 0 else ((used / total) * 100).toInt()
-            view.findViewById<ProgressBar>(R.id.progressBar).progress = percent
+
+            binding.textBudgetName.text = item.budget.name
+            binding.textUsed.text = "IDR $used"
+            binding.textMax.text = "IDR $total"
+            binding.textRemaining.text = "Budget left: IDR $remaining"
+            binding.progressBar.progress = percent
         }
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_report, parent, false)
-        return ReportViewHolder(view)
+        val binding = ItemReportBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ReportViewHolder(binding)
     }
 
     override fun getItemCount(): Int = items.size
