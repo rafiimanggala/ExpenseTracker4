@@ -1,11 +1,11 @@
-package com.example.expensetracker.ui.budget
+package com.example.expensetracker4.ui.budget
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.expensetracker.data.Budget
-import com.example.expensetracker.data.BudgetWithUsage
-import com.example.expensetracker.data.repository.BudgetRepository
+import com.example.expensetracker4.data.Budget
+import com.example.expensetracker4.data.BudgetWithUsage
+import com.example.expensetracker4.data.repository.BudgetRepository
 import kotlinx.coroutines.launch
 
 class BudgetViewModel(private val repository: BudgetRepository) : ViewModel() {

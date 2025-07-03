@@ -1,9 +1,9 @@
-// com.example.expensetracker.data.viewmodel.AuthViewModelFactory.kt
-package com.example.expensetracker.data.viewmodel
+// com.example.expensetracker4.data.viewmodel.AuthViewModelFactory.kt
+package com.example.expensetracker4.data.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.expensetracker.data.repository.UserRepository
+import com.example.expensetracker4.data.repository.UserRepository
 
 class AuthViewModelFactory(private val userRepository: UserRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

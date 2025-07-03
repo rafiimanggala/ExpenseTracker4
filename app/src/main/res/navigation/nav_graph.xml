@@ -8,7 +8,7 @@
     <!-- Expense Tracker Fragment -->
     <fragment
         android:id="@+id/expenseTrackerFragment"
-        android:name="com.example.expensetracker.ui.expense.ExpenseTrackerFragment"
+        android:name="com.example.expensetracker4.ui.expense.ExpenseTrackerFragment"
         android:label="Expense Tracker"
         tools:layout="@layout/fragment_expense_tracker">
 
@@ -20,14 +20,14 @@
     <!-- New Expense Fragment -->
     <fragment
         android:id="@+id/newExpenseFragment"
-        android:name="com.example.expensetracker.ui.expense.NewExpenseFragment"
+        android:name="com.example.expensetracker4.ui.expense.NewExpenseFragment"
         android:label="New Expense"
         tools:layout="@layout/fragment_new_expense" />
 
     <!-- Budget List Fragment -->
     <fragment
         android:id="@+id/budgetListFragment"
-        android:name="com.example.expensetracker.ui.budget.BudgetListFragment"
+        android:name="com.example.expensetracker4.ui.budget.BudgetListFragment"
         android:label="Budget List"
         tools:layout="@layout/fragment_budget_list">
 
@@ -40,7 +40,7 @@
     <!-- Budget Form Fragment -->
     <fragment
         android:id="@+id/budgetFormFragment"
-        android:name="com.example.expensetracker.ui.budget.BudgetFormFragment"
+        android:name="com.example.expensetracker4.ui.budget.BudgetFormFragment"
         android:label="Budget Form"
         tools:layout="@layout/fragment_budget_form">
 
@@ -54,7 +54,13 @@
     <!-- ✅ Report Fragment (Modul 4) -->
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.example.expensetracker.ui.report.ReportFragment"
+        android:name="com.example.expensetracker4.ui.report.ReportFragment"
         android:label="Report"
         tools:layout="@layout/fragment_report" />
+    <!-- ✅ Profile Fragment -->
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.expensetracker4.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

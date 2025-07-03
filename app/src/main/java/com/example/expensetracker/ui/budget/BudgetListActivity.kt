@@ -1,8 +1,8 @@
-package com.example.expensetracker.ui.budget
+package com.example.expensetracker4.ui.budget
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.expensetracker.R
+import com.example.expensetracker4.R
 
 class BudgetListActivity : AppCompatActivity() {
 
