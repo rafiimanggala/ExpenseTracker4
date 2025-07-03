@@ -1,8 +1,8 @@
-package com.example.expensetracker.data.viewmodel
+package com.example.expensetracker4.data.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.expensetracker.data.repository.ExpenseRepository
+import com.example.expensetracker4.data.repository.ExpenseRepository
 
 class ExpenseViewModelFactory(
     private val repository: ExpenseRepository

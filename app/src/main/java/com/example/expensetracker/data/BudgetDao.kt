@@ -1,9 +1,9 @@
-package com.example.expensetracker.data.dao
+package com.example.expensetracker4.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.expensetracker.data.Budget
-import com.example.expensetracker.data.BudgetWithUsage
+import com.example.expensetracker4.data.Budget
+import com.example.expensetracker4.data.BudgetWithUsage
 
 @Dao
 interface BudgetDao {

@@ -1,12 +1,12 @@
-package com.example.expensetracker.ui.budget
+package com.example.expensetracker4.ui.budget
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.expensetracker.data.Budget
-import com.example.expensetracker.databinding.ItemBudgetBinding
+import com.example.expensetracker4.data.Budget
+import com.example.expensetracker4.databinding.ItemBudgetBinding
 
 class BudgetAdapter(private val onClick: (Budget) -> Unit) :
     ListAdapter<Budget, BudgetAdapter.BudgetViewHolder>(BudgetDiffCallback()) {

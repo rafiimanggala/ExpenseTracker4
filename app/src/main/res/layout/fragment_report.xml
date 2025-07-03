@@ -15,10 +15,10 @@
     <TextView
         android:id="@+id/textViewTotal"
         android:layout_width="match_parent"
-        android:layout_height="189dp"
+        android:layout_height="285dp"
         android:gravity="center"
         android:paddingTop="8dp"
-        android:text="Total: Rp0 / Rp0"
+        android:text="Total / Expense\nRp0 / Rp0"
         android:textColor="#800080"
         android:textSize="16sp"
         android:textStyle="bold" />

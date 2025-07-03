@@ -1,4 +1,4 @@
-package com.example.expensetracker.ui.report
+package com.example.expensetracker4.ui.report
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.expensetracker.R
-import com.example.expensetracker.data.BudgetWithUsage
+import com.example.expensetracker4.R
+import com.example.expensetracker4.data.BudgetWithUsage
 
 class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ReportViewHolder>() {
 
@@ -26,9 +26,9 @@ class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ReportViewHolder>() {
             val remaining = total - used
 
             view.findViewById<TextView>(R.id.textBudgetName).text = item.budget.name
-            view.findViewById<TextView>(R.id.textUsed).text = "Terpakai: Rp$used"
-            view.findViewById<TextView>(R.id.textMax).text = "Max: Rp$total"
-            view.findViewById<TextView>(R.id.textRemaining).text = "Sisa: Rp$remaining"
+            view.findViewById<TextView>(R.id.textUsed).text = "IDR $used"
+            view.findViewById<TextView>(R.id.textMax).text = "IDR $total"
+            view.findViewById<TextView>(R.id.textRemaining).text = "Budget left: IDR $remaining"
 
             val percent = if (total == 0.0) 0 else ((used / total) * 100).toInt()
             view.findViewById<ProgressBar>(R.id.progressBar).progress = percent

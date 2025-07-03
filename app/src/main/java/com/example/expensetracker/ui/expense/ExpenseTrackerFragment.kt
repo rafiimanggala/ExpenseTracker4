@@ -1,4 +1,4 @@
-package com.example.expensetracker.ui.expense
+package com.example.expensetracker4.ui.expense
 
 import android.content.Context
 import android.os.Bundle
@@ -15,19 +15,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.expensetracker.R
-import com.example.expensetracker.data.Budget
-import com.example.expensetracker.data.Expense
-import com.example.expensetracker.data.ExpenseDao
-import com.example.expensetracker.data.MyDatabase
-import com.example.expensetracker.data.dao.BudgetDao
-import com.example.expensetracker.data.repository.BudgetRepository
-import com.example.expensetracker.data.repository.ExpenseRepository
-import com.example.expensetracker.data.viewmodel.ExpenseViewModel
-import com.example.expensetracker.data.viewmodel.ExpenseViewModelFactory
-import com.example.expensetracker.databinding.FragmentExpenseTrackerBinding
-import com.example.expensetracker.ui.budget.BudgetViewModel
-import com.example.expensetracker.ui.budget.BudgetViewModelFactory
+import com.example.expensetracker4.R
+import com.example.expensetracker4.data.Budget
+import com.example.expensetracker4.data.Expense
+import com.example.expensetracker4.data.ExpenseDao
+import com.example.expensetracker4.data.MyDatabase
+import com.example.expensetracker4.data.dao.BudgetDao
+import com.example.expensetracker4.data.repository.BudgetRepository
+import com.example.expensetracker4.data.repository.ExpenseRepository
+import com.example.expensetracker4.data.viewmodel.ExpenseViewModel
+import com.example.expensetracker4.data.viewmodel.ExpenseViewModelFactory
+import com.example.expensetracker4.databinding.FragmentExpenseTrackerBinding
+import com.example.expensetracker4.ui.budget.BudgetViewModel
+import com.example.expensetracker4.ui.budget.BudgetViewModelFactory
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -124,17 +124,29 @@ class ExpenseTrackerFragment : Fragment() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_expense_detail, null)
         val formatter = SimpleDateFormat("dd MMM yyyy", Locale("id", "ID"))
 
-        dialogView.findViewById<TextView>(R.id.tvDate).text =
-            formatter.format(Date(expense.date))
-        dialogView.findViewById<TextView>(R.id.tvNote).text = expense.note
-        dialogView.findViewById<TextView>(R.id.tvNominal).text = "Rp ${expense.amount.toInt()}"
-        dialogView.findViewById<TextView>(R.id.tvBudget).text = budget?.name ?: "Unknown"
+        val tvDate = dialogView.findViewById<TextView>(R.id.tvDate)
+        val tvNote = dialogView.findViewById<TextView>(R.id.tvNote)
+        val tvNominal = dialogView.findViewById<TextView>(R.id.tvNominal)
+        val tvBudget = dialogView.findViewById<TextView>(R.id.tvBudget)
+        val btnClose = dialogView.findViewById<Button>(R.id.btnClose)
 
-        AlertDialog.Builder(requireContext())
+        tvDate.text = formatter.format(Date(expense.date))
+        tvNote.text = expense.note
+        tvNominal.text = "Rp ${expense.amount.toInt()}"
+        tvBudget.text = budget?.name ?: "Unknown"
+
+        val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
-            .setPositiveButton("Tutup") { dialog, _ -> dialog.dismiss() }
-            .show()
+            .create()
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

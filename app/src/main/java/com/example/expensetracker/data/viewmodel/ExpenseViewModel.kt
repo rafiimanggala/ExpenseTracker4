@@ -1,12 +1,12 @@
-package com.example.expensetracker.data.viewmodel
+package com.example.expensetracker4.data.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.example.expensetracker.data.Expense
-import com.example.expensetracker.data.repository.ExpenseRepository
+import com.example.expensetracker4.data.Expense
+import com.example.expensetracker4.data.repository.ExpenseRepository
 import kotlinx.coroutines.launch
 
 class ExpenseViewModel(private val repository: ExpenseRepository) : ViewModel() {

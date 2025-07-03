@@ -1,4 +1,4 @@
-package com.example.expensetracker.ui
+package com.example.expensetracker4.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import com.example.expensetracker.R
-import com.example.expensetracker.databinding.ActivityMainBinding
+import com.example.expensetracker4.R
+import com.example.expensetracker4.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {

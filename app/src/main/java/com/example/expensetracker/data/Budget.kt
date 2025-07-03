@@ -1,4 +1,4 @@
-package com.example.expensetracker.data
+package com.example.expensetracker4.data
 
 import android.os.Parcelable
 import androidx.room.Entity

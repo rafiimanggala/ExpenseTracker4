@@ -23,26 +23,28 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textUsed"
-            android:layout_width="wrap_content"
+        <!-- Tambahkan layout horizontal untuk Used dan Max -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Terpakai: Rp0"
-            android:textColor="#555555" />
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
 
-        <TextView
-            android:id="@+id/textMax"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Max: Rp0"
-            android:textColor="#555555" />
+            <TextView
+                android:id="@+id/textUsed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rp0 "
+                android:textColor="#555555" />
 
-        <TextView
-            android:id="@+id/textRemaining"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sisa: Rp0"
-            android:textColor="#555555" />
+            <TextView
+                android:id="@+id/textMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp0"
+                android:textColor="#555555" />
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -53,5 +55,13 @@
             android:max="100"
             android:progress="50"
             android:progressTint="#00BCD4" />
+
+        <TextView
+            android:id="@+id/textRemaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Budget left: Rp0"
+            android:textColor="#555555"
+            android:layout_marginTop="4dp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
