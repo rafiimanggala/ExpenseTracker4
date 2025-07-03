@@ -50,4 +50,11 @@
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>
+
+    <!-- ✅ Report Fragment (Modul 4) -->
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.expensetracker.ui.report.ReportFragment"
+        android:label="Report"
+        tools:layout="@layout/fragment_report" />
 </navigation>

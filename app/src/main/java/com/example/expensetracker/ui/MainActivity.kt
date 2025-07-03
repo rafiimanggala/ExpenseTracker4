@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         navController = navHostFragment.navController
 
-        // Jangan langsung pakai setupWithNavController, kita handle sendiri
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.expenseTrackerFragment -> {
@@ -36,11 +35,14 @@ class MainActivity : AppCompatActivity() {
                     navigateSingleTopTo(R.id.budgetListFragment)
                     true
                 }
+                R.id.reportFragment -> {         // Tambahan ini
+                    navigateSingleTopTo(R.id.reportFragment)
+                    true
+                }
                 else -> false
             }
         }
 
-        // Set default selected item supaya fragment muncul di start
         binding.bottomNavigationView.selectedItemId = R.id.expenseTrackerFragment
     }
 
@@ -53,3 +55,4 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(destinationId, null, navOptions)
     }
 }
+

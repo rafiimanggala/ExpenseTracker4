@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.expensetracker.R
 import com.example.expensetracker.data.Budget
+import com.example.expensetracker.data.BudgetWithUsage
 import com.example.expensetracker.data.Expense
 import com.example.expensetracker.data.ExpenseDao
 import com.example.expensetracker.data.MyDatabase
@@ -33,7 +33,8 @@ class NewExpenseFragment : Fragment() {
     private lateinit var budgetDao: BudgetDao
     private lateinit var expenseDao: ExpenseDao
 
-    private var budgets: List<Budget> = listOf()
+    // Ganti tipe dari Budget ke BudgetWithUsage
+    private var budgets: List<BudgetWithUsage> = listOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNewExpenseBinding.inflate(inflater, container, false)
@@ -46,7 +47,7 @@ class NewExpenseFragment : Fragment() {
         expenseDao = db.expenseDao()
 
         showTodayDate()
-        loadBudgets()
+        loadBudgetsWithUsage()
 
         binding.spinnerBudget.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -66,31 +67,30 @@ class NewExpenseFragment : Fragment() {
         binding.tvDate.text = formatter.format(Date(today))
     }
 
-    private fun loadBudgets() {
-        lifecycleScope.launch {
-            budgets = budgetDao.getAllBudgets().value ?: listOf()
+    private fun loadBudgetsWithUsage() {
+        budgetDao.getBudgetWithUsage().observe(viewLifecycleOwner) { loadedBudgets ->
+            budgets = loadedBudgets
 
-            // Jika budgetDao.getAllBudgets() mengembalikan LiveData, perlu observe agar data realtime
-            budgetDao.getAllBudgets().observe(viewLifecycleOwner) { loadedBudgets ->
-                budgets = loadedBudgets
+            // Spinner menampilkan nama budget dari BudgetWithUsage.budget.name
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, budgets.map { it.budget.name })
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerBudget.adapter = adapter
 
-                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, budgets.map { it.name })
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.spinnerBudget.adapter = adapter
-
-                updateProgressBar()
-            }
+            updateProgressBar()
         }
     }
 
     private fun updateProgressBar() {
         if (budgets.isEmpty()) return
 
-        val selectedBudget = budgets.getOrNull(binding.spinnerBudget.selectedItemPosition) ?: return
-        val remaining = selectedBudget.total - selectedBudget.used
+        val selectedBudgetWithUsage = budgets.getOrNull(binding.spinnerBudget.selectedItemPosition) ?: return
 
-        binding.progressBar.max = selectedBudget.total.toInt()
-        binding.progressBar.progress = remaining.toInt()
+        val total = selectedBudgetWithUsage.budget.total
+        val used = selectedBudgetWithUsage.used
+        val remaining = total - used
+
+        binding.progressBar.max = total.toInt()
+        binding.progressBar.progress = used.toInt()
         binding.tvRemainingBudget.text = "Sisa budget: Rp ${remaining.toInt()}"
     }
 
@@ -114,25 +114,23 @@ class NewExpenseFragment : Fragment() {
             return
         }
 
-        val selectedBudget = budgets[binding.spinnerBudget.selectedItemPosition]
-        val remainingBudget = selectedBudget.total - selectedBudget.used
+        val selectedBudgetWithUsage = budgets[binding.spinnerBudget.selectedItemPosition]
+        val remainingBudget = selectedBudgetWithUsage.budget.total - selectedBudgetWithUsage.used
         if (nominal > remainingBudget) {
             Toast.makeText(context, "Nominal melebihi sisa budget: Rp ${remainingBudget.toInt()}", Toast.LENGTH_SHORT).show()
             return
         }
 
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             val expense = Expense(
                 amount = nominal,
                 note = note,
                 date = System.currentTimeMillis(),
-                budgetId = selectedBudget.id
+                budgetId = selectedBudgetWithUsage.budget.id
             )
             expenseDao.insertExpense(expense)
 
-            // Update budget used
-            val updatedBudget = selectedBudget.copy(used = selectedBudget.used + nominal)
-            budgetDao.updateBudget(updatedBudget)
+            // Tidak perlu update Budget.used secara manual, karena ini dihitung otomatis dari relasi expense
 
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, "Expense berhasil ditambah", Toast.LENGTH_SHORT).show()

@@ -1,8 +1,8 @@
-package com.example.expensetracker4.ui.budget
+package com.example.expensetracker.ui.budget
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.expensetracker4.data.repository.BudgetRepository
+import com.example.expensetracker.data.repository.BudgetRepository
 
 class BudgetViewModelFactory(
     private val repository: BudgetRepository

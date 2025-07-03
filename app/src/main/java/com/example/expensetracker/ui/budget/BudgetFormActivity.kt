@@ -6,13 +6,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.expensetracker.data.Budget
-import com.example.expensetracker.databinding.ActivityBudgetFormBinding
 import com.example.expensetracker.data.MyDatabase
 import com.example.expensetracker.data.repository.BudgetRepository
-import kotlinx.coroutines.launch
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
+import com.example.expensetracker.databinding.ActivityBudgetFormBinding
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class BudgetFormActivity : AppCompatActivity() {
@@ -40,7 +38,6 @@ class BudgetFormActivity : AppCompatActivity() {
         editingBudgetId = intent.getIntExtra("budget_id", -1).takeIf { it != -1 }
 
         if (editingBudgetId != null) {
-            // Load budget dari DB secara async
             lifecycleScope.launch {
                 editingBudget = withContext(Dispatchers.IO) {
                     viewModel.getById(editingBudgetId!!)
@@ -58,9 +55,9 @@ class BudgetFormActivity : AppCompatActivity() {
 
     private fun setupEditBudget(budget: Budget) {
         binding.etBudgetName.setText(budget.name)
-        binding.etBudgetAmount.setText(budget.total.toString()) // karena total adalah total anggaran
+        binding.etBudgetAmount.setText(budget.total.toString())
 
-        // Observasi total expense untuk budget ini, update nilai used dan totalExpenseForBudget
+        // Observasi total pengeluaran (used) untuk budget ini
         viewModel.getTotalExpenseForBudget(budget.id).observe(this) { totalExpense ->
             totalExpenseForBudget = totalExpense
         }
@@ -85,29 +82,25 @@ class BudgetFormActivity : AppCompatActivity() {
             if (total < totalExpenseForBudget) {
                 Toast.makeText(
                     this,
-                    "Nominal budget tidak boleh kurang dari total pengeluaran (${totalExpenseForBudget})",
+                    "Nominal budget tidak boleh kurang dari total pengeluaran ($totalExpenseForBudget)",
                     Toast.LENGTH_LONG
                 ).show()
                 return
             }
-            // Update Budget dengan total dan used yang sudah ada
             val updatedBudget = editingBudget!!.copy(
                 name = name,
                 total = total,
-                amount = total,  // bisa set sama dengan total, atau sesuai kebutuhanmu
-                used = editingBudget!!.used // used tetap diambil dari data lama, karena dihitung dari Expense
+                amount = total
             )
             lifecycleScope.launch {
                 viewModel.update(updatedBudget)
                 finish()
             }
         } else {
-            // Budget baru, used awal pasti 0, amount sama dengan total
             val newBudget = Budget(
                 name = name,
                 total = total,
-                amount = total,
-                used = 0.0
+                amount = total
             )
             lifecycleScope.launch {
                 viewModel.insert(newBudget)
@@ -116,4 +109,3 @@ class BudgetFormActivity : AppCompatActivity() {
         }
     }
 }
-

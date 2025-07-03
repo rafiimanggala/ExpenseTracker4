@@ -2,6 +2,7 @@ package com.example.expensetracker.data.repository
 
 import androidx.lifecycle.LiveData
 import com.example.expensetracker.data.Budget
+import com.example.expensetracker.data.BudgetWithUsage
 import com.example.expensetracker.data.ExpenseDao
 import com.example.expensetracker.data.dao.BudgetDao
 
@@ -19,4 +20,7 @@ class BudgetRepository(
 
     fun getTotalExpenseForBudget(budgetId: Int): LiveData<Double> =
         expenseDao.getTotalExpenseForBudget(budgetId)
+
+    fun getBudgetWithUsage(): LiveData<List<BudgetWithUsage>> = budgetDao.getBudgetWithUsage()
+
 }

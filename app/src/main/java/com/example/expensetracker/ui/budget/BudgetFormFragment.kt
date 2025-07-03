@@ -87,7 +87,7 @@ class BudgetFormFragment : Fragment() {
             if (total < totalExpenseForBudget) {
                 Toast.makeText(
                     requireContext(),
-                    "Nominal budget tidak boleh kurang dari total pengeluaran (${totalExpenseForBudget})",
+                    "Nominal budget tidak boleh kurang dari total pengeluaran ($totalExpenseForBudget)",
                     Toast.LENGTH_LONG
                 ).show()
                 return
@@ -96,8 +96,7 @@ class BudgetFormFragment : Fragment() {
             val updatedBudget = editingBudget!!.copy(
                 name = name,
                 total = total,
-                amount = total,
-                used = editingBudget!!.used
+                amount = total
             )
             lifecycleScope.launch {
                 viewModel.update(updatedBudget)
@@ -107,8 +106,7 @@ class BudgetFormFragment : Fragment() {
             val newBudget = Budget(
                 name = name,
                 total = total,
-                amount = total,
-                used = 0.0
+                amount = total
             )
             lifecycleScope.launch {
                 viewModel.insert(newBudget)
