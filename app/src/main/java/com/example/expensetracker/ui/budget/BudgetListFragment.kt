@@ -1,11 +1,12 @@
 package com.example.expensetracker.ui.budget
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.expensetracker.R
 import com.example.expensetracker.data.Budget
 import com.example.expensetracker.databinding.FragmentBudgetListBinding
 import com.example.expensetracker.data.MyDatabase
@@ -27,7 +28,11 @@ class BudgetListFragment : Fragment() {
         )
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentBudgetListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,20 +42,24 @@ class BudgetListFragment : Fragment() {
         binding.recyclerViewBudgets.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewBudgets.adapter = adapter
 
+        // Tombol tambah budget (FAB)
         binding.fabAddBudget.setOnClickListener {
-            val intent = Intent(requireContext(), BudgetFormActivity::class.java)
-            startActivity(intent)
+            // Navigasi ke BudgetFormFragment tanpa argumen
+            findNavController().navigate(R.id.budgetFormFragment)
         }
 
+        // Observe data dari ViewModel
         viewModel.budgets.observe(viewLifecycleOwner) { budgets ->
             adapter.submitList(budgets)
         }
     }
 
     private fun onBudgetClicked(budget: Budget) {
-        val intent = Intent(requireContext(), BudgetFormActivity::class.java)
-        intent.putExtra("budget_id", budget.id)  // Kirim ID saja
-        startActivity(intent)
+        // Navigasi ke BudgetFormFragment sambil mengirim budgetId
+        val bundle = Bundle().apply {
+            putInt("budgetId", budget.id)
+        }
+        findNavController().navigate(R.id.budgetFormFragment, bundle)
     }
 
     override fun onDestroyView() {

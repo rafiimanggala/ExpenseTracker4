@@ -1,16 +1,16 @@
-package com.example.expensetracker.ui
+package com.example.expensetracker4.ui
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.expensetracker.data.MyDatabase
-import com.example.expensetracker.data.User
-import com.example.expensetracker.data.repository.UserRepository
-import com.example.expensetracker.data.viewmodel.AuthViewModel
-import com.example.expensetracker.data.viewmodel.AuthViewModelFactory
-import com.example.expensetracker.databinding.ActivitySignUpBinding
+import com.example.expensetracker4.data.MyDatabase
+import com.example.expensetracker4.data.User
+import com.example.expensetracker4.data.repository.UserRepository
+import com.example.expensetracker4.data.viewmodel.AuthViewModel
+import com.example.expensetracker4.data.viewmodel.AuthViewModelFactory
+import com.example.expensetracker4.databinding.ActivitySignUpBinding
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 

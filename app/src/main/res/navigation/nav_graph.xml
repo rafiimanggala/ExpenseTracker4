@@ -5,6 +5,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/expenseTrackerFragment">
 
+    <!-- Expense Tracker Fragment -->
     <fragment
         android:id="@+id/expenseTrackerFragment"
         android:name="com.example.expensetracker.ui.expense.ExpenseTrackerFragment"
@@ -16,9 +17,37 @@
             app:destination="@id/newExpenseFragment" />
     </fragment>
 
+    <!-- New Expense Fragment -->
     <fragment
         android:id="@+id/newExpenseFragment"
         android:name="com.example.expensetracker.ui.expense.NewExpenseFragment"
         android:label="New Expense"
         tools:layout="@layout/fragment_new_expense" />
+
+    <!-- Budget List Fragment -->
+    <fragment
+        android:id="@+id/budgetListFragment"
+        android:name="com.example.expensetracker.ui.budget.BudgetListFragment"
+        android:label="Budget List"
+        tools:layout="@layout/fragment_budget_list">
+
+        <!-- Action to BudgetFormFragment -->
+        <action
+            android:id="@+id/action_budgetListFragment_to_budgetFormFragment"
+            app:destination="@id/budgetFormFragment" />
+    </fragment>
+
+    <!-- Budget Form Fragment -->
+    <fragment
+        android:id="@+id/budgetFormFragment"
+        android:name="com.example.expensetracker.ui.budget.BudgetFormFragment"
+        android:label="Budget Form"
+        tools:layout="@layout/fragment_budget_form">
+
+        <!-- Argument budgetId (optional for edit mode) -->
+        <argument
+            android:name="budgetId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 </navigation>

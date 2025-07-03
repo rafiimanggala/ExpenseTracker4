@@ -1,2 +1,2 @@
-package com.example.expensetracker.ui.profile
+package com.example.expensetracker4.ui.profile
 

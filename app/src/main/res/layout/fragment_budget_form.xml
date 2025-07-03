@@ -1,0 +1,30 @@
+<!-- res/layout/fragment_budget_form.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/etBudgetName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama Budget"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etBudgetAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nominal Budget"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnSaveBudget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
+        android:layout_marginTop="24dp" />
+</LinearLayout>
