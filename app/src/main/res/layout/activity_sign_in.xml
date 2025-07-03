@@ -11,6 +11,10 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"

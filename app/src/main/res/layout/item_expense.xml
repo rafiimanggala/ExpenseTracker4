@@ -11,7 +11,11 @@
         android:id="@+id/chipBudget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Budget" />
+        android:text="Budget"
+        android:textColor="#800080"
+        app:chipStrokeColor="#800080"
+        app:chipSurfaceColor="@android:color/transparent"
+        app:chipStrokeWidth="1dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,14 +27,15 @@
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="01 Jan 2024" />
+            android:text="01 Jan 2024"
+            android:textColor="#800080" />
 
         <TextView
             android:id="@+id/tvNominal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rp 100.000"
-            android:textColor="@color/teal_700"
+            android:textColor="#800080"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.expensetracker4.data
+package com.example.expensetracker.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded

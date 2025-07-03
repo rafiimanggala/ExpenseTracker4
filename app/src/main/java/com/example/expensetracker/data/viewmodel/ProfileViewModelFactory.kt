@@ -1,8 +1,8 @@
-package com.example.expensetracker4.data.viewmodel
+package com.example.expensetracker.data.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.expensetracker4.data.repository.UserRepository
+import com.example.expensetracker.data.repository.UserRepository
 
 class ProfileViewModelFactory(private val userRepository: UserRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -1,8 +1,8 @@
-package com.example.expensetracker4.data.viewmodel
+package com.example.expensetracker.data.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.expensetracker4.data.repository.UserRepository
+import com.example.expensetracker.data.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

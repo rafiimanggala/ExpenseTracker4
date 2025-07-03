@@ -1,4 +1,4 @@
-package com.example.expensetracker4.ui.report
+package com.example.expensetracker.ui.report
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.expensetracker4.R
-import com.example.expensetracker4.data.BudgetWithUsage
+import com.example.expensetracker.R
+import com.example.expensetracker.data.BudgetWithUsage
 
 class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ReportViewHolder>() {
 

@@ -15,6 +15,7 @@
             android:text="Create Account"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:textColor="#673AB7"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp" />
 
@@ -57,6 +58,10 @@
             android:hint="Repeat Password"
             android:inputType="textPassword"
             android:layout_marginBottom="24dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
 
         <Button
             android:id="@+id/btnSignUp"

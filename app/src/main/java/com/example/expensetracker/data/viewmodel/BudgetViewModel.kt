@@ -1,19 +1,32 @@
-package com.example.expensetracker4.ui.budget
+package com.example.expensetracker.ui.budget
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.example.expensetracker4.data.Budget
-import com.example.expensetracker4.data.BudgetWithUsage
-import com.example.expensetracker4.data.repository.BudgetRepository
+import com.example.expensetracker.data.Budget
+import com.example.expensetracker.data.BudgetWithUsage
+import com.example.expensetracker.data.repository.BudgetRepository
 import kotlinx.coroutines.launch
 
 class BudgetViewModel(private val repository: BudgetRepository) : ViewModel() {
 
-    val budgets: LiveData<List<Budget>> = repository.allBudgets
+    private val _userId = MutableLiveData<Int>()
+    private var currentUserId: Int = -1  // Simpan userId sebagai variabel biasa
 
-    // **Tambahkan properti budgetWithUsage**
-    val budgetWithUsage: LiveData<List<BudgetWithUsage>> = repository.getBudgetWithUsage()
+    val budgets = _userId.switchMap { userId ->
+        repository.getAllBudgets(userId)
+    }
+
+    val budgetWithUsage = _userId.switchMap { userId ->
+        repository.getBudgetWithUsage(userId)
+    }
+
+    fun setUserId(userId: Int) {
+        _userId.value = userId
+        currentUserId = userId
+    }
 
     fun insert(budget: Budget) {
         viewModelScope.launch {
@@ -27,8 +40,15 @@ class BudgetViewModel(private val repository: BudgetRepository) : ViewModel() {
         }
     }
 
-    fun getTotalExpenseForBudget(budgetId: Int): LiveData<Double> =
-        repository.getTotalExpenseForBudget(budgetId)
+    fun getTotalExpenseForBudget(budgetId: Int): LiveData<Double> {
+        if (currentUserId == -1) throw IllegalStateException("User ID belum di-set")
+        return repository.getTotalExpenseForBudget(budgetId, currentUserId)
+    }
 
-    suspend fun getById(id: Int): Budget? = repository.getById(id)
+    suspend fun getById(id: Int): Budget? {
+        if (currentUserId == -1) throw IllegalStateException("User ID belum di-set")
+        return repository.getById(id, currentUserId)
+    }
 }
+
+

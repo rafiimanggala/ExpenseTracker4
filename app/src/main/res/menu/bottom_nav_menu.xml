@@ -3,7 +3,7 @@
     <item
         android:id="@+id/expenseTrackerFragment"
         android:icon="@drawable/ic_expense"
-        android:title="Expense" />
+        android:title="Expense Tracker" />
     <item
         android:id="@+id/budgetListFragment"
         android:icon="@drawable/ic_budget"

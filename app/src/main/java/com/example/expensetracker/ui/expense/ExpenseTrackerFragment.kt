@@ -1,23 +1,33 @@
-package com.example.expensetracker4.ui.expense
+package com.example.expensetracker.ui.expense
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.expensetracker4.R
-import com.example.expensetracker4.data.Budget
-import com.example.expensetracker4.data.Expense
-import com.example.expensetracker4.data.ExpenseDao
-import com.example.expensetracker4.data.MyDatabase
-import com.example.expensetracker4.data.dao.BudgetDao
-import com.example.expensetracker4.databinding.FragmentExpenseTrackerBinding
+import com.example.expensetracker.R
+import com.example.expensetracker.data.Budget
+import com.example.expensetracker.data.Expense
+import com.example.expensetracker.data.ExpenseDao
+import com.example.expensetracker.data.MyDatabase
+import com.example.expensetracker.data.dao.BudgetDao
+import com.example.expensetracker.data.repository.BudgetRepository
+import com.example.expensetracker.data.repository.ExpenseRepository
+import com.example.expensetracker.data.viewmodel.ExpenseViewModel
+import com.example.expensetracker.data.viewmodel.ExpenseViewModelFactory
+import com.example.expensetracker.databinding.FragmentExpenseTrackerBinding
+import com.example.expensetracker.ui.budget.BudgetViewModel
+import com.example.expensetracker.ui.budget.BudgetViewModelFactory
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,12 +37,25 @@ class ExpenseTrackerFragment : Fragment() {
     private var _binding: FragmentExpenseTrackerBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var db: MyDatabase
-    private lateinit var expenseDao: ExpenseDao
-    private lateinit var budgetDao: BudgetDao
-
     private lateinit var expenseAdapter: ExpenseAdapter
     private var budgets: List<Budget> = listOf()
+
+    private val expenseViewModel: ExpenseViewModel by viewModels {
+        ExpenseViewModelFactory(
+            ExpenseRepository(
+                MyDatabase.getDatabase(requireContext()).expenseDao()
+            )
+        )
+    }
+
+    private val budgetViewModel: BudgetViewModel by viewModels {
+        BudgetViewModelFactory(
+            BudgetRepository(
+                MyDatabase.getDatabase(requireContext()).budgetDao(),
+                MyDatabase.getDatabase(requireContext()).expenseDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,23 +68,34 @@ class ExpenseTrackerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        db = MyDatabase.getDatabase(requireContext())
-        expenseDao = db.expenseDao()
-        budgetDao = db.budgetDao()
-
         setupRecyclerView()
 
-        budgetDao.getAllBudgets().observe(viewLifecycleOwner) { budgetList ->
-            budgets = budgetList
-            loadExpensesAndUpdateAdapter()
+        // Ambil userId dari SharedPreferences
+        val sharedPref = requireContext().getSharedPreferences("session", Context.MODE_PRIVATE)
+        val userId = sharedPref.getInt("userId", -1)
+        Log.d("ExpenseTrackerFragment", "User ID: $userId")
+
+        if (userId == -1) {
+            Toast.makeText(requireContext(), "User ID tidak ditemukan", Toast.LENGTH_SHORT).show()
+            return
         }
 
-        // Pakai FloatingActionButton langsung dari binding
+        // Set userId ke ViewModel
+        expenseViewModel.setUserId(userId)
+        budgetViewModel.setUserId(userId)
+
+        // Observe budget
+        budgetViewModel.budgets.observe(viewLifecycleOwner) { budgetList ->
+            budgets = budgetList
+            // Setelah budgets tersedia, observe expenses
+            collectAllExpensesAndUpdateAdapter()
+        }
+
+        // FAB tambah pengeluaran
         binding.fabAddExpense.setOnClickListener {
             findNavController().navigate(R.id.action_expenseTrackerFragment_to_newExpenseFragment)
         }
     }
-
 
     private fun setupRecyclerView() {
         expenseAdapter = ExpenseAdapter(listOf(), budgets) { expense ->
@@ -73,10 +107,15 @@ class ExpenseTrackerFragment : Fragment() {
         }
     }
 
-    private fun loadExpensesAndUpdateAdapter() {
-        lifecycleScope.launch {
-            val expenses = expenseDao.getAllExpensesSorted()
-            expenseAdapter.updateData(expenses, budgets)
+    private fun collectAllExpensesAndUpdateAdapter() {
+        val allExpenses = mutableListOf<Expense>()
+
+        budgets.forEach { budget ->
+            expenseViewModel.getExpensesForBudget(budget.id).observe(viewLifecycleOwner) { expenses ->
+                allExpenses.removeAll { it.budgetId == budget.id }
+                allExpenses.addAll(expenses)
+                expenseAdapter.updateData(allExpenses.sortedByDescending { it.date }, budgets)
+            }
         }
     }
 
@@ -102,3 +141,5 @@ class ExpenseTrackerFragment : Fragment() {
         _binding = null
     }
 }
+
+

@@ -1,4 +1,4 @@
-package com.example.expensetracker4.ui
+package com.example.expensetracker.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.expensetracker4.data.MyDatabase
-import com.example.expensetracker4.data.repository.UserRepository
-import com.example.expensetracker4.data.viewmodel.AuthViewModel
-import com.example.expensetracker4.data.viewmodel.AuthViewModelFactory
-import com.example.expensetracker4.databinding.ActivitySignInBinding
+import com.example.expensetracker.data.MyDatabase
+import com.example.expensetracker.data.repository.UserRepository
+import com.example.expensetracker.data.viewmodel.AuthViewModel
+import com.example.expensetracker.data.viewmodel.AuthViewModelFactory
+import com.example.expensetracker.databinding.ActivitySignInBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -76,6 +76,7 @@ class SignInActivity : AppCompatActivity() {
                         if (user != null) {
                             // 🟢 Simpan sesi login ke SharedPreferences
                             with(sharedPref.edit()) {
+                                putInt("userId", user.id) // ✅ Simpan userId
                                 putString("username", user.username)
                                 putString("firstName", user.firstName)
                                 putString("lastName", user.lastName)
@@ -88,6 +89,7 @@ class SignInActivity : AppCompatActivity() {
                                 this@SignInActivity,
                                 MainActivity::class.java
                             ).apply {
+                                putExtra("userId", user.id) // ✅ Kirim userId juga
                                 putExtra("username", user.username)
                                 putExtra("firstName", user.firstName)
                                 putExtra("lastName", user.lastName)
@@ -95,6 +97,7 @@ class SignInActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                         }
+
 
                         // Reset login status agar tidak trigger ulang
                         authViewModel.resetLoginStatus()
