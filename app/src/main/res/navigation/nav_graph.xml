@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/expenseTrackerFragment">
+
+    <fragment
+        android:id="@+id/expenseTrackerFragment"
+        android:name="com.example.expensetracker.ui.expense.ExpenseTrackerFragment"
+        android:label="Expense Tracker"
+        tools:layout="@layout/fragment_expense_tracker">
+
+        <action
+            android:id="@+id/action_expenseTrackerFragment_to_newExpenseFragment"
+            app:destination="@id/newExpenseFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newExpenseFragment"
+        android:name="com.example.expensetracker.ui.expense.NewExpenseFragment"
+        android:label="New Expense"
+        tools:layout="@layout/fragment_new_expense" />
+</navigation>

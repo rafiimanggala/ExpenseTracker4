@@ -1,4 +1,4 @@
-package com.example.expensetracker4.ui.budget
+package com.example.expensetracker.ui.budget
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,10 +6,10 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.expensetracker4.data.Budget
-import com.example.expensetracker4.databinding.FragmentBudgetListBinding
-import com.example.expensetracker4.data.MyDatabase
-import com.example.expensetracker4.data.repository.BudgetRepository
+import com.example.expensetracker.data.Budget
+import com.example.expensetracker.databinding.FragmentBudgetListBinding
+import com.example.expensetracker.data.MyDatabase
+import com.example.expensetracker.data.repository.BudgetRepository
 
 class BudgetListFragment : Fragment() {
 

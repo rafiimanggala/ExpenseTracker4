@@ -1,4 +1,4 @@
-package com.example.expensetracker4.ui
+package com.example.expensetracker.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.expensetracker4.data.MyDatabase
-import com.example.expensetracker4.data.repository.UserRepository
-import com.example.expensetracker4.data.viewmodel.AuthViewModel
-import com.example.expensetracker4.data.viewmodel.AuthViewModelFactory
-import com.example.expensetracker4.databinding.ActivitySignInBinding
+import com.example.expensetracker.data.MyDatabase
+import com.example.expensetracker.data.repository.UserRepository
+import com.example.expensetracker.data.viewmodel.AuthViewModel
+import com.example.expensetracker.data.viewmodel.AuthViewModelFactory
+import com.example.expensetracker.databinding.ActivitySignInBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -28,7 +28,7 @@ class SignInActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("session", MODE_PRIVATE)
         val isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
         if (isLoggedIn) {
-            val intent = Intent(this, SignInSuccessActivity::class.java).apply {
+            val intent = Intent(this, MainActivity::class.java).apply {
                 putExtra("username", sharedPref.getString("username", ""))
                 putExtra("firstName", sharedPref.getString("firstName", ""))
                 putExtra("lastName", sharedPref.getString("lastName", ""))
@@ -86,7 +86,7 @@ class SignInActivity : AppCompatActivity() {
                             // Pindah ke halaman sukses
                             val intent = Intent(
                                 this@SignInActivity,
-                                SignInSuccessActivity::class.java
+                                MainActivity::class.java
                             ).apply {
                                 putExtra("username", user.username)
                                 putExtra("firstName", user.firstName)

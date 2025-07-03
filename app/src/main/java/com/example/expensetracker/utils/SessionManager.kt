@@ -1,4 +1,4 @@
-package com.example.expensetracker4.utils
+package com.example.expensetracker.utils
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -1,9 +1,9 @@
-package com.example.expensetracker4.data.repository
+package com.example.expensetracker.data.repository
 
 import androidx.lifecycle.LiveData
-import com.example.expensetracker4.data.Budget
-import com.example.expensetracker4.data.ExpenseDao
-import com.example.expensetracker4.data.dao.BudgetDao
+import com.example.expensetracker.data.Budget
+import com.example.expensetracker.data.ExpenseDao
+import com.example.expensetracker.data.dao.BudgetDao
 
 class BudgetRepository(
     private val budgetDao: BudgetDao,

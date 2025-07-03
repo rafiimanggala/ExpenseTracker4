@@ -1,12 +1,12 @@
-package com.example.expensetracker4.ui
+package com.example.expensetracker.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.expensetracker4.databinding.ActivitySignInSuccessBinding
-import com.example.expensetracker4.ui.budget.BudgetFormActivity
-import com.example.expensetracker4.ui.budget.BudgetListActivity
-import com.example.expensetracker4.ui.budget.BudgetListFragment
+import com.example.expensetracker.databinding.ActivitySignInSuccessBinding
+import com.example.expensetracker.ui.budget.BudgetFormActivity
+import com.example.expensetracker.ui.budget.BudgetListActivity
+import com.example.expensetracker.ui.budget.BudgetListFragment
 
 
 class SignInSuccessActivity : AppCompatActivity() {

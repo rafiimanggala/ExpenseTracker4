@@ -1,4 +1,4 @@
-package com.example.expensetracker4.data
+package com.example.expensetracker.data
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -8,6 +8,9 @@ import androidx.room.PrimaryKey
 data class Budget(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val amount: Double
+    val amount: Double,
+    val total: Double,  // Total anggaran baru
+    val used: Double    // Total pengeluaran yang sudah dipakai
 )
+
 

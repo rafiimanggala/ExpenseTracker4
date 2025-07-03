@@ -1,7 +1,7 @@
-package com.example.expensetracker4.data.repository
+package com.example.expensetracker.data.repository
 
-import com.example.expensetracker4.data.User
-import com.example.expensetracker4.data.UserDao
+import com.example.expensetracker.data.User
+import com.example.expensetracker.data.UserDao
 
 class UserRepository(private val userDao: UserDao) {
 
